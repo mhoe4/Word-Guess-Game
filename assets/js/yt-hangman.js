@@ -37,6 +37,7 @@
       }
     }
 
+    //Function to replace "-" with actual letters
     function updateDisplayedWord(charIndices, userInput) {
       for(var i = 0; i < charIndices.length; i++) {
         wordDisplayed = setCharAt(wordDisplayed, charIndices[i], userInput);
@@ -44,10 +45,12 @@
       }
     }
 
+    //Function to update the number of remaining guesses the user has
     function renderRemainingNumberGuesses() {
       document.querySelector("#remaining-number-guesses").innerHTML = "Number of Guesses Remaining: \n" + remainingGuesses;
     }
 
+    //Function to display the incorrect letters that have been guessed
     function renderIncorrectGuesses() {
       document.querySelector("#incorrect-guesses").innerHTML = "Incorrect letters guessed: \n" +  incorrectLettersGuessed.toString();
     }
@@ -57,6 +60,9 @@
       document.querySelector("#wins").innerHTML = "Wins: " + wins;
     }
 
+    function renderWinningDetails() {
+      document.querySelector("#winning-word").innerHTML = words[wordIndex] + " by Young Thug";
+    }
     // HELPER FUNCTIONS
     // ==============================================================================
 
@@ -110,7 +116,7 @@
 
     function reset() { 
       wordIndex++;
-      remainingGuesses = words[wordIndex].length;
+      //remainingGuesses = words[wordIndex].length;
       lettersGuessed = [];
       incorrectLettersGuessed = [];
       
@@ -118,11 +124,10 @@
 
     function hasGameEnded() {
       if (remainingGuesses == 0) {
-        alert("You Lost :(");
         return true;
-      } else if (wordDisplayed == words[wordIndex]) {
+      } else if (wordDisplayed == words[wordIndex].toLowerCase()) {
         wins++;
-        alert("You Won!");
+        renderWinningDetails();
         return true;
       } else {
         return false;
