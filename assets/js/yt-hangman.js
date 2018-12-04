@@ -116,7 +116,6 @@
 
     function reset() { 
       wordIndex++;
-      //remainingGuesses = words[wordIndex].length;
       lettersGuessed = [];
       incorrectLettersGuessed = [];
       
