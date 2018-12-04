@@ -12,7 +12,7 @@
     // Variable holding the index of the word being guessed
     var wordIndex = 0;
     // Variable to number of remaining letter guesses.
-    var remainingGuesses = 10;
+    var remainingGuesses = 0;
     // Array to hold letters that have been guessed.
     var lettersGuessed = [];
     // Array to display the incorrect letters that have been guessed
@@ -20,11 +20,11 @@
     // Word that is displayed to user based on correct letters guessed
     var wordDisplayed = "";
 
-    // FUNCTIONS
+    // RENDERING HTML FUNCTIONS
     // ==============================================================================
 
     // Function to render words.
-    function renderWord() {
+    function renderHyphenatedWord() {
       // If there are still more words, render the next one.
       if (wordIndex <= (words.length - 1)) {
         wordDisplayed = hyphenateWord(words[wordIndex]);
@@ -37,18 +37,45 @@
       }
     }
 
+    function updateDisplayedWord(charIndices, userInput) {
+      for(var i = 0; i < charIndices.length; i++) {
+        wordDisplayed = setCharAt(wordDisplayed, charIndices[i], userInput);
+        document.querySelector("#current-word").innerHTML = wordDisplayed;
+      }
+    }
+
+    function renderRemainingNumberGuesses() {
+      document.querySelector("#remaining-number-guesses").innerHTML = "Number of Guesses Remaining: \n" + remainingGuesses;
+    }
+
+    function renderIncorrectGuesses() {
+      document.querySelector("#incorrect-guesses").innerHTML = "Incorrect letters guessed: \n" +  incorrectLettersGuessed.toString();
+    }
+    
+    // Function that updates the number of wins...
+    function renderWins() {
+      document.querySelector("#wins").innerHTML = "Wins: " + wins;
+    }
+
+    // HELPER FUNCTIONS
+    // ==============================================================================
+
+    // Function returs a string of all '-' to represent the length of the given word
     function hyphenateWord(word) {
       var hyphenatedWord = "";
       for (var i = 0; i < word.length; i++) {
-        hyphenatedWord += "_";
+        hyphenatedWord += "-";
         console.log(hyphenatedWord);
       }
-      return hyphenatedWord;
-    }
 
-    // Function that updates the number of wins...
-    function updateWins() {
-      document.querySelector("#wins").innerHTML = "Wins: " + wins;
+      // if space is in word, replace '-' with a space
+      var letterIndex = words[wordIndex].indexOf(" ");
+
+      if (letterIndex > -1) {
+        hyphenatedWord = setCharAt(hyphenatedWord, letterIndex, " ");
+      } 
+      
+      return hyphenatedWord;
     }
 
     // Function that checks character input
@@ -59,14 +86,34 @@
       return reg.test(input);
     }
 
+    function findCharIndices(input) {
+      var indices = [];
+      for(var i=0; i<words[wordIndex].length;i++) {
+        if (words[wordIndex][i].toLowerCase() === input) indices.push(i);
+      }
+      return indices;
+    }
+
     // Function to replace specific character in word displayed
     function setCharAt(str,index,chr) {
       if(index > str.length-1) return str;
       return str.substr(0,index) + chr + str.substr(index+1);
     }
 
-    function reset() { 
+    function startGame() {
+      renderHyphenatedWord();
+      renderWins();
+      remainingGuesses = words[wordIndex].length;
+      renderRemainingNumberGuesses();
+      renderIncorrectGuesses();
+    }
 
+    function reset() { 
+      wordIndex++;
+      remainingGuesses = words[wordIndex].length;
+      lettersGuessed = [];
+      incorrectLettersGuessed = [];
+      
     }
 
     function hasGameEnded() {
@@ -74,6 +121,7 @@
         alert("You Lost :(");
         return true;
       } else if (wordDisplayed == words[wordIndex]) {
+        wins++;
         alert("You Won!");
         return true;
       } else {
@@ -85,8 +133,7 @@
     // ==============================================================================
 
     // Calling functions to start the game.
-    renderWord();
-    updateWins();
+    startGame();
 
     // When the user presses a key, it will run the following function...
     document.onkeyup = function(event) {
@@ -106,22 +153,31 @@
         if (!lettersGuessed.includes(userInput)) {
 
           // find index of letter inside word
-          var letterIndex = words[wordIndex].indexOf(input);
+          var letterIndex = words[wordIndex].toLowerCase().indexOf(userInput);
 
-          // if letter is in word, replace character in the word displayed to user
+          // if letter is in word, replace all instances of the character in the word displayed to user
           if (letterIndex > -1) {
-            wordDisplayed = setCharAt(wordDisplayed, letterIndex, userInput);
-            document.querySelector("#current-word").innerHTML = wordDisplayed;
+
+            //find all instances of char and replace them in the displayed word
+            var indices = findCharIndices(userInput);
+            updateDisplayedWord(indices, userInput);
             
           } else {
             //if letter is not in word, add to array of incorrect letters guessed
             incorrectLettersGuessed.push(userInput);
-            document.querySelector("#incorrect-guesses").innerHTML = incorrectLettersGuessed.toString();
+            renderIncorrectGuesses();
+            remainingGuesses--;
+            renderRemainingNumberGuesses();
           }
 
           //add to array of letters already guessed and decrement number of remaining guesses
           lettersGuessed.push(userInput);
-          remainingGuesses--;
+
+          if (hasGameEnded()) {
+            reset();
+            startGame();
+          }
+
         } else {
           alert("That letter has been guessed.")
         }
@@ -130,6 +186,6 @@
         alert("Please enter a letter character.")
       }
 
-      hasGameEnded()
+      
 
     };
