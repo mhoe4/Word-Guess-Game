@@ -6,19 +6,67 @@
   <title>Question Game</title>
   <link rel="shortcut icon" type="image/png" href="assets/images/Slime_Season_3_Cover.jpg"/>
 
+  <!-- Bootstrap File -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+
 </head>
 
 <body>
 
-  <h1>YOUNG THUG HANGMAN</h1>
+  <!-- Overall Bootstrap Grid -->
+  <div class="container">
 
-  <p>Press any letter to begin!</p>
-  <p id="winning-word"></p>
-  <p id="wins"></p>
-  <p id="current-word"></p>
-  <p id="remaining-number-guesses"></p>
-  <p id="incorrect-guesses"></p>
+    <!-- Jumbotron with Title -->
+    <div class="jumbotron">
+      <h1 class="text-center">
+        <strong>Young Thug Hangman</strong>
+      </h1>
+      <hr>
+      <div id="musicControls" class="text-center">
+        <button class="btn btn-warning btn-xs theme-button">
+          <span class="fa fa-music"></span> Play Song</button>
+        <button class="btn btn-dark btn-xs pause-button">
+          <span class="fa fa-pause"></span> Pause Song</button>
+      </div>
 
+    </div>
+    <div class="row">
+
+      <div class="col-lg-6">
+
+        <!-- Hangman game-->
+        <div class="card">
+          <h4 class="card-header">Press any letter to begin!</h4>
+          <div class="card-body">
+            <div class="text-center">
+              <p id="wins"></p>
+              <p id="current-word"></p>
+              <p id="remaining-number-guesses"></p>
+              <p id="incorrect-guesses"></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Card (Song)-->
+      <div class="col-lg-6">
+
+          <div class="card">
+              <h4 class="card-header" id="winning-word"></h4>
+              <div class="card-body">
+                <!-- Song Image -->
+        <img src="assets/images/Beautiful_Thugger_Girls_cover.jpg" alt="Beautiful_Thugger_Girls_cover" class="img btg" style="position:absolute; top:50px; left: 80px; z-index: -20; height: 300px">
+              </div>
+            </div>
+        
+      </div>
+    </div>
+  </div>
   
   <script type="text/javascript" src="assets/js/yt-hangman.js"></script>
 
