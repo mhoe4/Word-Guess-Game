@@ -3,8 +3,8 @@
 
 // The array of songs for hangman.
 var words = [ 
-  {title: "Worth It", img: "", mp3: ""} ,
-  {title: "Feel It", img: "", mp3: ""}
+  {title: "Worth It", img: "ss3.jpg", mp3: ""} ,
+  {title: "Feel It", img: "btg.jpg", mp3: ""}
 ];
 
 // We start the game with a score of 0.
@@ -62,6 +62,7 @@ function renderWins() {
 
 function renderWinningDetails() {
   document.querySelector("#winning-word").innerHTML = words[wordIndex].title + " by Young Thug";
+  //document.querySelector("#img").innerHTML = ;
 }
 // HELPER FUNCTIONS
 // ==============================================================================
