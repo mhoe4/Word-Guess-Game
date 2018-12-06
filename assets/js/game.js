@@ -64,6 +64,7 @@ function renderWins() {
 function renderWinningDetails() {
   document.querySelector("#winning-word").innerHTML = words[wordIndex].title + " by Young Thug";
   document.querySelector("#img").innerHTML = "<img src=\"" + words[wordIndex].img + "\" alt=\"song-img\" class=\"mx-auto d-block\" >";
+  document.querySelector("#musicControls").innerHTML = "<button class=\"btn btn-warning btn-xs theme-button\"><span class=\"fa fa-music\"></span> Play Song</button><button class=\"btn btn-dark btn-xs pause-button\"><span class=\"fa fa-pause\"></span> Pause Song</button>";
 }
 // HELPER FUNCTIONS
 // ==============================================================================
