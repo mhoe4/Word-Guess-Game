@@ -3,8 +3,8 @@
 
 // The array of songs for hangman.
 var words = [ 
-  "Worth It" ,
-  "Feel It"
+  {title: "Worth It", img: "", mp3: ""} ,
+  {title: "Feel It", img: "", mp3: ""}
 ];
 
 // We start the game with a score of 0.
@@ -27,7 +27,7 @@ var wordDisplayed = "";
 function renderHyphenatedWord() {
   // If there are still more words, render the next one.
   if (wordIndex <= (words.length - 1)) {
-    wordDisplayed = hyphenateWord(words[wordIndex]);
+    wordDisplayed = hyphenateWord(words[wordIndex].title);
     document.querySelector("#current-word").innerHTML = wordDisplayed;
   }
   // If there aren't, render the end game screen.
@@ -61,7 +61,7 @@ function renderWins() {
 }
 
 function renderWinningDetails() {
-  document.querySelector("#winning-word").innerHTML = words[wordIndex] + " by Young Thug";
+  document.querySelector("#winning-word").innerHTML = words[wordIndex].title + " by Young Thug";
 }
 // HELPER FUNCTIONS
 // ==============================================================================
@@ -75,7 +75,7 @@ function hyphenateWord(word) {
   }
 
   // if space is in word, replace '-' with a space
-  var letterIndex = words[wordIndex].indexOf(" ");
+  var letterIndex = words[wordIndex].title.indexOf(" ");
 
   if (letterIndex > -1) {
     hyphenatedWord = setCharAt(hyphenatedWord, letterIndex, " ");
@@ -100,8 +100,8 @@ function isValidInput(input) {
 
 function findCharIndices(input) {
   var indices = [];
-  for(var i=0; i<words[wordIndex].length;i++) {
-    if (words[wordIndex][i].toLowerCase() === input) indices.push(i);
+  for(var i=0; i<words[wordIndex].title.length;i++) {
+    if (words[wordIndex].title[i].toLowerCase() === input) indices.push(i);
   }
   return indices;
 }
@@ -115,7 +115,7 @@ function setCharAt(str,index,chr) {
 function startGame() {
   renderHyphenatedWord();
   renderWins();
-  remainingGuesses = words[wordIndex].length-3;
+  remainingGuesses = words[wordIndex].title.length-3;
   renderRemainingNumberGuesses();
   renderIncorrectGuesses();
 }
@@ -130,7 +130,7 @@ function reset() {
 function hasGameEnded() {
   if (remainingGuesses == 0) {
     return true;
-  } else if (wordDisplayed == words[wordIndex].toLowerCase()) {
+  } else if (wordDisplayed == words[wordIndex].title.toLowerCase()) {
     wins++;
     renderWinningDetails();
     return true;
@@ -163,7 +163,7 @@ document.onkeyup = function(event) {
     if (!lettersGuessed.includes(userInput)) {
 
       // find index of letter inside word
-      var letterIndex = words[wordIndex].toLowerCase().indexOf(userInput);
+      var letterIndex = words[wordIndex].title.toLowerCase().indexOf(userInput);
 
       // if letter is in word, replace all instances of the character in the word displayed to user
       if (letterIndex > -1) {
