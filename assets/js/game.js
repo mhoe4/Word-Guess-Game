@@ -47,12 +47,12 @@ function updateDisplayedWord(charIndices, userInput) {
 
 //Function to update the number of remaining guesses the user has
 function renderRemainingNumberGuesses() {
-  document.querySelector("#remaining-number-guesses").innerHTML = "Number of Guesses Remaining: \n" + remainingGuesses;
+  document.querySelector("#remaining-number-guesses").innerHTML = "Number of Guesses Remaining: <br>" + remainingGuesses;
 }
 
 //Function to display the incorrect letters that have been guessed
 function renderIncorrectGuesses() {
-  document.querySelector("#incorrect-guesses").innerHTML = "Incorrect letters guessed: \n" +  incorrectLettersGuessed.toString();
+  document.querySelector("#incorrect-guesses").innerHTML = "Incorrect letters guessed: <br>" +  incorrectLettersGuessed.toString();
 }
 
 // Function that updates the number of wins...
@@ -115,7 +115,7 @@ function setCharAt(str,index,chr) {
 function startGame() {
   renderHyphenatedWord();
   renderWins();
-  remainingGuesses = words[wordIndex].length;
+  remainingGuesses = words[wordIndex].length-3;
   renderRemainingNumberGuesses();
   renderIncorrectGuesses();
 }
@@ -188,8 +188,6 @@ document.onkeyup = function(event) {
         startGame();
       }
 
-    } else {
-      alert("That letter has been guessed.")
     }
     
   } 

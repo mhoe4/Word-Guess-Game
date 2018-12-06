@@ -1,0 +1,14 @@
+body {
+  background-image: url("../images/yt-collage.jpg");
+  height: 100%;
+}   
+
+
+.jumbotron {
+  height: 150px;
+}
+
+img {
+  height: 200px;
+  width: 200px;
+}
