@@ -3,9 +3,9 @@
 
 // The array of songs for hangman.
 var words = [ 
-  {title: "Worth It", img: "assets/images/ss3.jpg", mp3: ""} ,
-  {title: "Feel It", img: "assets/images/btg.jpg", mp3: ""} ,
-  {title: "Best Friend", img: "assets/images/bf.jpg", mp3: ""}
+  {title: "Worth It", img: "assets/images/ss3.jpg", mp3: "assets/songs/Worth-It.mp3"} ,
+  {title: "Feel It", img: "assets/images/btg.jpg", mp3: "assets/songs/Feel-It.mp3"} ,
+  {title: "Best Friend", img: "assets/images/bf.jpg", mp3: "assets/songs/Best-Friend.mp3"}
 ];
 
 // We start the game with a score of 0.
@@ -20,6 +20,12 @@ var lettersGuessed = [];
 var incorrectLettersGuessed = [];
 // Word that is displayed to user based on correct letters guessed
 var wordDisplayed = "";
+// Audio element to control audio functions
+var audioElement = document.createElement("audio");
+audioElement.setAttribute("src", "assets/songs/Cruise-Ship.mp3");
+audioElement.autoplay = true;
+
+
 
 // RENDERING HTML FUNCTIONS
 // ==============================================================================
@@ -64,7 +70,11 @@ function renderWins() {
 function renderWinningDetails() {
   document.querySelector("#winning-word").innerHTML = words[wordIndex].title + " by Young Thug";
   document.querySelector("#img").innerHTML = "<img src=\"" + words[wordIndex].img + "\" alt=\"song-img\" class=\"mx-auto d-block\" >";
-  document.querySelector("#musicControls").innerHTML = "<button class=\"btn btn-warning btn-xs theme-button\"><span class=\"fa fa-music\"></span> Play Song</button><button class=\"btn btn-dark btn-xs pause-button\"><span class=\"fa fa-pause\"></span> Pause Song</button>";
+
+  // Set new song
+  audioElement.pause();
+  audioElement.setAttribute("src", words[wordIndex].mp3);
+  audioElement.play();
 }
 // HELPER FUNCTIONS
 // ==============================================================================
@@ -133,6 +143,7 @@ function reset() {
 function hasGameEnded() {
   if (remainingGuesses == 0) {
     return true;
+    alert("You have used all of your guesses. Try guessing another song.");
   } else if (wordDisplayed == words[wordIndex].title.toLowerCase()) {
     wins++;
     renderWinningDetails();
@@ -140,6 +151,14 @@ function hasGameEnded() {
   } else {
     return false;
   }
+}
+
+function playSong() {
+  audioElement.play();
+}
+
+function pauseSong() {
+  audioElement.pause();
 }
 
 // MAIN PROCESS
