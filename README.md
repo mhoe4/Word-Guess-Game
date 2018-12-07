@@ -1,8 +1,10 @@
 ## Young Thug Themed - Word Guess Game 
 
- Use the letter character keys to try to guess the name of the Young Thug Song that is playing!
+ Use the letter character keys to try to guess the name of the Young Thug Song that is represented by the hyphens on the left side of the page!
 
- When you guess the right song a new song will begin playing and you will try to guess the new song.
+ When you guess the name of the song correctly, it will begin playing in the area on the right side of the page where the name of the song will be displayed. You will then try to guess the name of a new song.
+
+ The song playing when the page is loaded is not the song you are trying to guess.
  
  Wins: (# of times user guessed the word correctly).
 
