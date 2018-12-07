@@ -1,4 +1,4 @@
-## Word Guess Game 
+# Word Guess Game 
 
 1. [Watch the demo](https://youtu.be/W-IJcC4tYFI).
 
