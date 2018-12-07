@@ -30,16 +30,16 @@ audioElement.autoplay = true;
 // RENDERING HTML FUNCTIONS
 // ==============================================================================
 
-// Function to render words.
+// Function to render words as a string of hyphens representing the length of the word
 function renderHyphenatedWord() {
-  // If there are still more words, render the next one.
+  // If there are still more words in the list, render the next one.
   if (wordIndex <= (words.length - 1)) {
     wordDisplayed = hyphenateWord(words[wordIndex].title);
     document.querySelector("#current-word").innerHTML = wordDisplayed;
   }
   // If there aren't, render the end game screen.
   else {
-    document.querySelector("#current-word").innerHTML = "Game Over!";
+    document.querySelector("#current-word").innerHTML = "Game Over, there are no more songs to guess!";
     document.querySelector("#wins").innerHTML = "Total Wins: " + wins + " out of " + words.length;
   }
 }
@@ -67,15 +67,17 @@ function renderWins() {
   document.querySelector("#wins").innerHTML = "Wins: " + wins;
 }
 
+// when guessed correctly, Display the name of the song that was guessed, its corresponding album art and begin playing the song
 function renderWinningDetails() {
   document.querySelector("#winning-word").innerHTML = words[wordIndex].title + " by Young Thug";
   document.querySelector("#img").innerHTML = "<img src=\"" + words[wordIndex].img + "\" alt=\"song-img\" class=\"mx-auto d-block\" >";
 
-  // Set new song
+  // Set new song and play it
   audioElement.pause();
   audioElement.setAttribute("src", words[wordIndex].mp3);
   audioElement.play();
 }
+
 // HELPER FUNCTIONS
 // ==============================================================================
 
@@ -89,7 +91,6 @@ function hyphenateWord(word) {
 
   // if space is in word, replace '-' with a space
   var letterIndex = words[wordIndex].title.indexOf(" ");
-
   if (letterIndex > -1) {
     hyphenatedWord = setCharAt(hyphenatedWord, letterIndex, " ");
   } 
@@ -101,16 +102,22 @@ function hyphenateWord(word) {
 function isValidInput(input) {
   // Regular expression to check user input a letter and not some other character
   var reg = /^[a-z]+$/i;
+
+  // array of inputs to check against
   var exclude = ["shift", "capslock", "control", "contextmenu", "tab", "enter", "numlock",
   "backspace", "end","delete","insert","home","pageup","pagedown", "escape", "alt", "meta",
     "arrowleft","arrowdown","arrowright","arrowup", "scrolllock","pause","printscreen", "clear"];
 
+  //return false if input is in the excludes array
   if (exclude.includes(input)) {
     return false;
   }
+
+  //return true if input is a letter char 'a-z'
   return reg.test(input);
 }
 
+//find all instances of the given input char inside the word, returns array of corresponding indices
 function findCharIndices(input) {
   var indices = [];
   for(var i=0; i<words[wordIndex].title.length;i++) {
@@ -125,6 +132,7 @@ function setCharAt(str,index,chr) {
   return str.substr(0,index) + chr + str.substr(index+1);
 }
 
+//function to start a new game
 function startGame() {
   renderHyphenatedWord();
   renderWins();
@@ -133,6 +141,7 @@ function startGame() {
   renderIncorrectGuesses();
 }
 
+//increment the word index, and reset the letters that have been guessed.
 function reset() { 
   wordIndex++;
   lettersGuessed = [];
@@ -140,6 +149,7 @@ function reset() {
   
 }
 
+//determine whether or not the word has been guessed or if the user has run out of guesses.
 function hasGameEnded() {
   if (remainingGuesses == 0) {
     return true;
@@ -198,6 +208,7 @@ document.onkeyup = function(event) {
         //if letter is not in word, add to array of incorrect letters guessed
         incorrectLettersGuessed.push(userInput);
         renderIncorrectGuesses();
+        //decrement number of remaining guesses
         remainingGuesses--;
         renderRemainingNumberGuesses();
       }
@@ -205,8 +216,11 @@ document.onkeyup = function(event) {
       //add to array of letters already guessed and decrement number of remaining guesses
       lettersGuessed.push(userInput);
 
+      //check if game has ended
       if (hasGameEnded()) {
+        //if game has ended, reset the game for the next word
         reset();
+        //start new game
         startGame();
       }
 
