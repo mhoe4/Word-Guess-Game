@@ -62,7 +62,7 @@ function renderWins() {
 // when guessed correctly, Display the name of the song that was guessed, its corresponding album art and begin playing the song
 function renderWinningDetails() {
   document.querySelector("#winning-word").innerHTML = words[wordIndex].title + " by Young Thug";
-  document.querySelector("#img").innerHTML = "<img src=\"" + words[wordIndex].img + "\" alt=\"song-img\" class=\"mx-auto d-block\" >";
+  document.querySelector("#img-div").innerHTML = "<img id=\"img\" src=\"" + words[wordIndex].img + "\" alt=\"song-img\" class=\"mx-auto d-block\" >";
 
   // Set new song and play it
   audioElement.pause();
