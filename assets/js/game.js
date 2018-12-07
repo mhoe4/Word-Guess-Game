@@ -26,22 +26,14 @@ audioElement.setAttribute("src", "assets/songs/Cruise-Ship.mp3");
 audioElement.autoplay = true;
 
 
-
 // RENDERING HTML FUNCTIONS
 // ==============================================================================
 
 // Function to render words as a string of hyphens representing the length of the word
 function renderHyphenatedWord() {
-  // If there are still more words in the list, render the next one.
-  if (wordIndex <= (words.length - 1)) {
-    wordDisplayed = hyphenateWord(words[wordIndex].title);
-    document.querySelector("#current-word").innerHTML = wordDisplayed;
-  }
-  // If there aren't, render the end game screen.
-  else {
-    document.querySelector("#current-word").innerHTML = "Game Over, there are no more songs to guess!";
-    document.querySelector("#wins").innerHTML = "Total Wins: " + wins + " out of " + words.length;
-  }
+  wordDisplayed = hyphenateWord(words[wordIndex].title);
+  document.querySelector("#current-word").innerHTML = wordDisplayed;
+  
 }
 
 //Function to replace "-" with actual letters
@@ -54,17 +46,17 @@ function updateDisplayedWord(charIndices, userInput) {
 
 //Function to update the number of remaining guesses the user has
 function renderRemainingNumberGuesses() {
-  document.querySelector("#remaining-number-guesses").innerHTML = "Number of Guesses Remaining: <br>" + remainingGuesses;
+  document.querySelector("#remaining-number-guesses").innerHTML = " Number of Guesses Remaining: <br>" + remainingGuesses;
 }
 
 //Function to display the incorrect letters that have been guessed
 function renderIncorrectGuesses() {
-  document.querySelector("#incorrect-guesses").innerHTML = "Incorrect letters guessed: <br>" +  incorrectLettersGuessed.toString();
+  document.querySelector("#incorrect-guesses").innerHTML = " Incorrect letters guessed: <br>" +  incorrectLettersGuessed.toString();
 }
 
 // Function that updates the number of wins...
 function renderWins() {
-  document.querySelector("#wins").innerHTML = "Wins: " + wins;
+  document.querySelector("#wins").innerHTML = " Wins: " + wins;
 }
 
 // when guessed correctly, Display the name of the song that was guessed, its corresponding album art and begin playing the song
@@ -134,11 +126,20 @@ function setCharAt(str,index,chr) {
 
 //function to start a new game
 function startGame() {
-  renderHyphenatedWord();
-  renderWins();
-  remainingGuesses = words[wordIndex].title.length-3;
-  renderRemainingNumberGuesses();
-  renderIncorrectGuesses();
+  // If there are still more words in the list, start a new game.
+  if (wordIndex <= (words.length - 1)) {
+    renderHyphenatedWord();
+    renderWins();
+    remainingGuesses = words[wordIndex].title.length-3;
+    renderRemainingNumberGuesses();
+    renderIncorrectGuesses();
+  }
+  // If there aren't, render the end game screen.
+  else {
+    document.querySelector("#current-word").innerHTML = "Game Over, there are no more songs to guess!";
+    document.querySelector("#wins").innerHTML = " Total Wins: " + wins + " out of " + words.length;
+  }
+  
 }
 
 //increment the word index, and reset the letters that have been guessed.
@@ -146,7 +147,6 @@ function reset() {
   wordIndex++;
   lettersGuessed = [];
   incorrectLettersGuessed = [];
-  
 }
 
 //determine whether or not the word has been guessed or if the user has run out of guesses.
