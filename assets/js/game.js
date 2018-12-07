@@ -3,7 +3,6 @@
 
 // The array of songs for hangman.
 var words = [ 
-  {title: "Cruise Ship", img: "assets/images/super-slimey.jpg", mp3: "assets/songs/Cruise-Ship.mp3"} ,
   {title: "Worth It", img: "assets/images/ss3.jpg", mp3: "assets/songs/Worth-It.mp3"} ,
   {title: "Feel It", img: "assets/images/btg.jpg", mp3: "assets/songs/Feel-It.mp3"} ,
   {title: "Best Friend", img: "assets/images/bf.jpg", mp3: "assets/songs/Best-Friend.mp3"}
